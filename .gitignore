@@ -6,3 +6,6 @@
 
 # Python Cache
 __pycache__/
+
+# Vector Database
+data/chroma_store/
