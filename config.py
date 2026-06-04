@@ -24,6 +24,8 @@ FILE_UPLOAD_PATH = PROJECT_ROOT / "uploads"
 VECTOR_DB_PATH.mkdir(exist_ok=True)
 FILE_UPLOAD_PATH.mkdir(exist_ok=True)
 
+VECTOR_DB_COLLECTION_NAME = "knowledge_base"
+
 MAX_FILE_SIZE_MB = 20
 MAX_QUERY_SIZE = 1000
 
