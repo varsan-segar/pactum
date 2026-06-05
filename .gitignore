@@ -7,6 +7,9 @@
 # Python Cache
 __pycache__/
 
+# Development Environment
+.devcontainer/
+
 # Vector Database
 data/chroma_store/
 
