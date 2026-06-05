@@ -1,6 +1,6 @@
 import uuid
 import streamlit as st
-from streamlit_cookies_controller import CookieController
+import extra_streamlit_components as stx
 
 from langchain_core.messages import HumanMessage, AIMessage
 
@@ -17,16 +17,22 @@ st.set_page_config(
     layout="wide"
 )
 
-cookies = CookieController()
+cookies = stx.CookieManager()
 
 if 'user_id' not in st.session_state:
     user_id = cookies.get("user_id")
 
-    if not user_id:
+    if user_id is None:
+        st.stop()
+
+    if user_id:
+        st.session_state.user_id = user_id
+    else:
         user_id = str(uuid.uuid4())
-        cookies.set("user_id", user_id)
-        
-    st.session_state.user_id = user_id
+        cookies.set("user_id", user_id, expires_at=None)
+
+        st.session_state.user_id = user_id
+        st.rerun()
         
 if 'history' not in st.session_state:
     st.session_state.history = []
