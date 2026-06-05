@@ -45,10 +45,10 @@ def get_chat_model():
         api_key = os.getenv("OPENAI_API_KEY")
         chat_model = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
 
-        return {"api_key": api_key, "model": chat_model, "temperature": LLM_TEMPERATURE, "max_tokens": LLM_MAX_TOKENS}
+        return {"api_key": api_key, "model": chat_model, "temperature": LLM_TEMPERATURE, "max_tokens": LLM_MAX_TOKENS, "streaming": True}
     
     base_url = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
     api_key = os.getenv("GROQ_API_KEY")
     chat_model = os.getenv("GROQ_CHAT_MODEL", "llama-3.3-70b-versatile")
 
-    return {"base_url": base_url, "api_key": api_key, "model": chat_model, "temperature": LLM_TEMPERATURE, "max_tokens": LLM_MAX_TOKENS}
+    return {"base_url": base_url, "api_key": api_key, "model": chat_model, "temperature": LLM_TEMPERATURE, "max_tokens": LLM_MAX_TOKENS, "streaming": True}
