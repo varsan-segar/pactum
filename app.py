@@ -1,7 +1,6 @@
 import uuid
 import streamlit as st
 from streamlit_cookies_controller import CookieController
-from pathlib import Path
 
 from langchain_core.messages import HumanMessage, AIMessage
 
@@ -26,7 +25,6 @@ if 'user_id' not in st.session_state:
     if not user_id:
         user_id = str(uuid.uuid4())
         cookies.set("user_id", user_id)
-        st.write(f"USER ID: {user_id}\nThis is your user id, save it to use the app with your documents on different devies or browsers.")
         
     st.session_state.user_id = user_id
         
@@ -57,7 +55,10 @@ with st.sidebar:
                     st.warning("This document is already indexed in the Vector DB.")
 
             if is_new_file:        
-                FILE_PATH = FILE_UPLOAD_PATH / file.name
+                USER_DIR = FILE_UPLOAD_PATH / st.session_state.user_id
+                USER_DIR.mkdir(parents=True, exist_ok=True)
+
+                FILE_PATH = USER_DIR / file.name
 
                 with FILE_PATH.open("wb") as f:
                     f.write(file.getbuffer())
@@ -85,6 +86,16 @@ with st.sidebar:
                         delete_document(user_id=st.session_state.user_id, doc_id=document['doc_id'])
                         st.session_state.documents = list_documents(user_id=st.session_state.user_id)
                         st.rerun()
+    
+    st.divider()
+
+    st.write(f"""
+    **USER ID:**
+             
+    `{st.session_state.user_id}`
+
+    Save this ID. If cookies are cleared or you use a different browser/device, you'll need this ID to interact with your documents.
+    """)
 
 for msg in st.session_state.history:
     with st.chat_message(msg['role']):
