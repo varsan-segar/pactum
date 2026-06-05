@@ -21,7 +21,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 VECTOR_DB_PATH = PROJECT_ROOT / "data" / "chroma_store"
 FILE_UPLOAD_PATH = PROJECT_ROOT / "uploads"
 
-VECTOR_DB_PATH.mkdir(exist_ok=True)
+VECTOR_DB_PATH.mkdir(parents=True, exist_ok=True)
 FILE_UPLOAD_PATH.mkdir(exist_ok=True)
 
 VECTOR_DB_COLLECTION_NAME = "knowledge_base"
