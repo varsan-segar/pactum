@@ -9,3 +9,6 @@ __pycache__/
 
 # Vector Database
 data/chroma_store/
+
+# Uploaded Files
+uploads/*.pdf
