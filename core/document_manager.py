@@ -29,7 +29,12 @@ def delete_document(user_id: str, doc_id: str):
     )
 
     documents = vector_store.get(
-        where={"user_id": user_id, "doc_id": doc_id}
+        where={
+            "$and":[
+                {"user_id": user_id},
+                {"doc_id": doc_id}
+            ]
+        }
     )
 
     ids = documents.get("ids")
