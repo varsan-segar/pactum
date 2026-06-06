@@ -22,9 +22,8 @@ cookie_manager = stx.CookieManager()
 
 cookies = cookie_manager.get_all()
 
-if 'cookies_ready' not in st.session_state:
-    st.session_state.cookies_ready = True
-    st.rerun()
+if len(cookies) == 0:
+    st.stop()
 
 if 'user_id' not in st.session_state:
     user_id = cookie_manager.get("user_id")
