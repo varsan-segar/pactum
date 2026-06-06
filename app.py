@@ -17,22 +17,23 @@ st.set_page_config(
     layout="wide"
 )
 
-cookies = stx.CookieManager()
+cookie_manager = stx.CookieManager()
+
+cookies = cookie_manager.get_all()
+
+if 'cookies_ready' not in st.session_state:
+    st.session_state.cookies_ready = True
+    st.rerun()
 
 if 'user_id' not in st.session_state:
-    user_id = cookies.get("user_id")
-
-    if user_id is None:
-        st.stop()
+    user_id = cookie_manager.get("user_id")
 
     if user_id:
         st.session_state.user_id = user_id
     else:
         user_id = str(uuid.uuid4())
-        cookies.set("user_id", user_id, expires_at=None)
-
+        cookie_manager.set("user_id", user_id, expires_at=None)
         st.session_state.user_id = user_id
-        st.rerun()
         
 if 'history' not in st.session_state:
     st.session_state.history = []
