@@ -1,6 +1,7 @@
 import uuid
 import streamlit as st
 import extra_streamlit_components as stx
+from datetime import datetime, timedelta
 
 from langchain_core.messages import HumanMessage, AIMessage
 
@@ -32,7 +33,7 @@ if 'user_id' not in st.session_state:
         st.session_state.user_id = user_id
     else:
         user_id = str(uuid.uuid4())
-        cookie_manager.set("user_id", user_id, expires_at=None)
+        cookie_manager.set("user_id", user_id, expires_at=datetime.now() + timedelta(days=365))
         st.session_state.user_id = user_id
         
 if 'history' not in st.session_state:
