@@ -1,7 +1,5 @@
 import uuid
 import streamlit as st
-import extra_streamlit_components as stx
-from datetime import datetime, timedelta
 
 from langchain_core.messages import HumanMessage, AIMessage
 
@@ -18,21 +16,12 @@ st.set_page_config(
     layout="wide"
 )
 
-cookie_manager = stx.CookieManager()
-
-cookies = cookie_manager.get_all()
-
-if len(cookies) == 0:
-    st.stop()
-
 if 'user_id' not in st.session_state:
-    user_id = cookie_manager.get("user_id")
-
-    if user_id:
-        st.session_state.user_id = user_id
+    if 'user_id' in st.query_params:
+        st.session_state.user_id = st.query_params['user_id']
     else:
         user_id = str(uuid.uuid4())
-        cookie_manager.set("user_id", user_id, expires_at=datetime.now() + timedelta(days=365))
+        st.query_params['user_id'] = user_id
         st.session_state.user_id = user_id
         
 if 'history' not in st.session_state:
@@ -97,11 +86,11 @@ with st.sidebar:
     st.divider()
 
     st.write(f"""
-    **USER ID:**
-             
+    **YOUR WORKSPACE:**
+
     `{st.session_state.user_id}`
 
-    Save this ID. If cookies are cleared or you use a different browser/device, you'll need this ID to interact with your documents.
+    Your workspace ID is saved in the URL. **Bookmark this page** to return to your documents from any browser or device.
     """)
 
 for msg in st.session_state.history:
